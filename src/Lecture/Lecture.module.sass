@@ -1,0 +1,77 @@
+@import "./Common.sass"
+
+.root
+  display: flex
+  height: 100%
+
+  > *
+    width: 50%
+
+.lectureList
+  height: 100%
+  padding-right: 10px
+  box-sizing: border-box
+  overflow-y: scroll
+
+  &::-webkit-scrollbar
+    display: none  
+
+.lectureItem
+  @extend .baseContentBox
+
+  display: flex
+  width: 100%
+  cursor: pointer
+  height: 55px
+
+  > *
+    padding: 7px 10px
+    margin : 0
+    line-height: 41px
+
+.lectureTitle
+  flex-grow: 1
+  font-weight: bold
+
+  > span
+    font-size: 12px
+    font-weight: lighter
+    margin-left: 5px
+
+.lectureThumb
+  > img
+    height: 41px
+    border-radius: 50%
+    background: white
+    margin: 0 4px
+
+.newClass
+  @extend .baseContentBox
+
+  text-align: center
+  line-height: 50px
+  cursor: pointer
+
+.content
+  overflow-y: scroll
+  height: 100%
+
+  &::-webkit-scrollbar
+    display: none
+
+.saveBox
+  @extend .baseContentBox
+  width: 70%
+  display: inline-block
+  cursor: pointer
+  text-align: center
+  background: #434570
+
+.deleteBox
+  @extend .baseContentBox
+  width: 20%
+  display: inline-block
+  float: right
+  cursor: pointer
+  text-align: center
+  background: #f44336

@@ -1,0 +1,73 @@
+@import "./Common.sass"
+
+.root
+  display: flex
+  height: 100%
+
+.motivatorList
+  width: 350px
+  margin-right: 10px
+  height: 100%
+  overflow-y: scroll
+
+  &::-webkit-scrollbar
+    display: none
+
+.motivatorItem
+  @extend .baseContentBox
+  cursor: pointer
+  display: flex
+  align-items: center
+
+  > div:nth-child(1)
+    width: 65px
+    height: 65px
+    border-radius: 50%
+    margin: 5px
+
+  > div:nth-child(2)
+
+    > p
+      margin: 3px 0
+      font-size: 12px
+
+
+      &:first-child
+        font-weight: bold
+        font-size: 17px
+
+        > span
+          font-size: 12px
+          font-style: italic
+
+
+.new
+  justify-content: center
+  font-weight: bold
+  line-height: 50px
+  cursor: pointer
+
+
+.content
+  width: 100%
+  overflow-y: scroll
+
+  &::-webkit-scrollbar
+    display: none
+
+.saveBox
+  @extend .baseContentBox
+  width: 70%
+  display: inline-block
+  cursor: pointer
+  text-align: center
+  background: #434570
+
+.deleteBox
+  @extend .baseContentBox
+  width: 20%
+  display: inline-block
+  float: right
+  cursor: pointer
+  text-align: center
+  background: #f44336

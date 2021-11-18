@@ -1,0 +1,38 @@
+@import "./Common.sass"
+
+.root
+  @extend .baseContentBox
+
+  padding: 10px
+
+  > p
+    margin: 0 0 5px 0
+    font-weight: bold
+
+.content
+  display: flex
+
+  > div
+    flex-grow: 1
+    margin-left: 5px
+
+.inputBox
+  margin-bottom: 5px
+  font-size: 13px
+
+  > span
+    display: inline-block
+    width: 20%
+    line-height: 25px
+
+  > input
+    margin-left: 5px
+    width: 70%
+    background: transparent
+    outline-style: none
+    border: 1px solid #999
+    color: white
+    height: 25px
+
+    &::-webkit-calendar-picker-indicator
+      filter: invert(1)
