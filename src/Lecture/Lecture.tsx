@@ -3,22 +3,13 @@ import axios from 'axios';
 import styles from './Lecture.module.sass';
 
 import { SETTINGS } from '../settings';
+import type { T_lecture } from '../settings';
 
 import InfoImage from './InfoImage';
 import InfoBasic from './InfoBasic';
 import InfoMotivator from './InfoMotivator';
 
 import LectureItem from '../Common/LectureItem';
-
-type T_lecture = {
-  id: number,
-  title: string,
-  subtitle: string,
-  date: string,
-  motivators: number[],
-  thumbs: string[],
-  image: string | File,
-};
 
 const emptyData:T_lecture = {
   title: "Enter title",

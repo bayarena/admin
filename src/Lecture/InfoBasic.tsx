@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './InfoBasic.module.sass'
 
-import type { T_lecture } from './Lecture';
+import type { T_lecture } from '../settings';
 
 interface I_basicInfo{
 	data: T_lecture,

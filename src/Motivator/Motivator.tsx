@@ -3,20 +3,13 @@ import axios from 'axios';
 import styles from './Motivator.module.sass';
 
 import { SETTINGS } from '../settings';
+import type { T_motivator } from '../settings';
 
 import InfoBasic from './InfoBasic';
 import InfoImage from './InfoImage';
 import InfoLecture from './InfoLecture';
 
 import MotivatorItem from '../Common/MotivatorItem';
-
-type T_motivator = {
-  name_kor: string,
-  name_eng: string,
-  id: number,
-  image: string | File,
-  image_thumb: string,
-};
 
 const emptyData:T_motivator = {
   name_kor: "한글 이름 입력",
@@ -37,14 +30,7 @@ function Motivator() {
     .then((res) => {
       if(res.status === 200){
         let motList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
-          let mot:T_motivator = {
-            name_eng: curr.name_eng,
-            name_kor: curr.name_kor,
-            image: curr.image,
-            image_thumb: curr.image_thumb,
-            id: curr.id
-          };
-          acc.push(mot);
+          acc.push(curr);
           return acc;
         }, []);
 
@@ -65,13 +51,7 @@ function Motivator() {
     axios.get(SETTINGS.REST_URL + '/motivators/' + n)
       .then((res) => {
         if(res.status === 200){
-          setMotivator({
-            name_eng: res.data.name_eng,
-            name_kor: res.data.name_kor,
-            image: res.data.image,
-            image_thumb: res.data.image_thumb,
-            id: res.data.id
-          });
+          setMotivator(res.data);
         }
       });
   };
@@ -164,4 +144,3 @@ function Motivator() {
 }
 
 export default Motivator;
-export type { T_motivator };
