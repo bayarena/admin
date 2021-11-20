@@ -8,6 +8,8 @@ import ContentImageInfo from './ContentImageInfo';
 import ContentBasicInfo from './ContentBasicInfo';
 import ContentMotivatorInfo from './ContentMotivatorInfo';
 
+import LectureItem from '../Common/LectureItem';
+
 type T_lecture = {
   id: number,
   title: string,
@@ -28,20 +30,6 @@ const emptyData:T_lecture = {
   image: "",
 };
 
-function LectureItem(props:any){
-  return(
-    <div className={styles.lectureItem} onClick={()=>props.onClick ? props.onClick() : ''}>
-      <p>{props.date}</p>
-      <p className={styles.lectureTitle}>{props.title} <span>{props.subtitle}</span></p>
-      <div className={styles.lectureThumb}>
-        {props.thumbs.map((d:string, i:number) => {
-          return <img src={SETTINGS.REST_URL + d} alt="" key={i} />
-        })}
-      </div>
-    </div>    
-  );
-}
-
 function Lecture() {
 
   const [lectureList, setLectureList] = useState([]);
@@ -53,6 +41,9 @@ function Lecture() {
       if(res.status === 200){
         let lectureList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
           let lec:T_lecture = curr;
+          lec.thumbs = lec.thumbs.map((d:string) => {
+            return SETTINGS.REST_URL + d;
+          });
           acc.push(lec);
           return acc;
         }, []);

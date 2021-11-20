@@ -1,16 +1,7 @@
 import React from 'react';
 import styles from './ContentLectureInfo.module.sass';
 
-function LectureItem(){
-	return(
-		<div className={styles.lectureItem}>
-			<p>2021-11-18 PM 2:00</p>
-			<p>Title</p>
-			<p>subTitle</p>
-			<p>informations...</p>
-		</div>		
-	);
-}
+import LectureItem from '../Common/LectureItem';
 
 function ContentLectureInfo(){
 	return(
