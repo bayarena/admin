@@ -56,7 +56,7 @@ function InfoImage(props:I_ImageInfo){
 	          <ImageSelector
 	            onChange={props.onChange}
 	            src={props.src}
-	            alt="150 x 150px 강의 썸네일" />
+	            alt="200 x 150px 강의 썸네일" />
 			</div>
 		</div>
 	);

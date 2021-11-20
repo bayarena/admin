@@ -29,13 +29,7 @@ function Motivator() {
     axios.get(SETTINGS.REST_URL + '/motivators/')
     .then((res) => {
       if(res.status === 200){
-        let motList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
-          acc.push(curr);
-          return acc;
-        }, []);
-
-        console.log(motList);
-        setMotivatorList(motList);
+        setMotivatorList(res.data.results);
       }
     }); 
  

@@ -132,7 +132,7 @@ function Lecture() {
       <div className={styles.content}>
         <InfoImage src={lecture.image} onChange={onImageInfoChange}/>
         <InfoBasic data={lecture} onChange={onBasicInfoChange} />
-        <InfoMotivator />
+        <InfoMotivator data={lecture.motivators} />
         <div className={styles.saveBox} onClick={()=>onSaveLecture()}>
           <p>저장하기</p>
         </div>
