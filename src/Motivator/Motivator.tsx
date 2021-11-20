@@ -8,6 +8,8 @@ import ContentBasicInfo from './ContentBasicInfo';
 import ContentImageInfo from './ContentImageInfo';
 import ContentLectureInfo from './ContentLectureInfo';
 
+import MotivatorItem from '../Common/MotivatorItem';
+
 type T_motivator = {
   name_kor: string,
   name_eng: string,
@@ -23,21 +25,6 @@ const emptyData:T_motivator = {
   image: "",
   image_thumb: ""
 };
-
-function MotivatorItem(props:any){
-  return(
-    <div className={styles.motivatorItem} onClick={()=>props.onClick ? props.onClick() : ''}>
-      <div style={{
-        background: "url(" + props.image_thumb + ")"
-      }}>
-      </div>
-      <div>
-        <p>{props.name_kor} <span>{props.name_eng}</span></p>
-        <p>informations...</p>
-      </div>
-    </div>
-  );
-}
 
 function Motivator() {
 

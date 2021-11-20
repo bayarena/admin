@@ -1,0 +1,28 @@
+@import "../Common/Common.sass"
+
+.motivatorItem
+  @extend .baseContentBox
+  cursor: pointer
+  display: flex
+  align-items: center
+
+  > div:nth-child(1)
+    width: 65px
+    height: 65px
+    border-radius: 50%
+    margin: 5px
+
+  > div:nth-child(2)
+
+    > p
+      margin: 3px 0
+      font-size: 12px
+
+
+      &:first-child
+        font-weight: bold
+        font-size: 17px
+
+        > span
+          font-size: 12px
+          font-style: italic
