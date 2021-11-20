@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './ContentImageInfo.module.sass';
+import styles from './InfoImage.module.sass';
 
 interface I_ImageInfo{
 	src: string | File,
@@ -41,27 +41,25 @@ function ImageSelector(props:any){
       <input
         style={{display: "none"}}
         type="file"
-        accept="image/png"
+        accept="image/png, image/jpeg"
         ref={imageInput}
         onChange={onChange} />
     </div>
   );
 }
 
-function ContentImageInfo(props:I_ImageInfo){
+function InfoImage(props:I_ImageInfo){
 	return(
 		<div className={styles.root}>
-			<p>강사 이미지</p>
+			<p>강의 이미지</p>
 			<div className={styles.content}>
 	          <ImageSelector
 	            onChange={props.onChange}
-	            width={200}
-	            height={200}
 	            src={props.src}
-	            alt="뒷 배경 투명한 png 이미지" />
+	            alt="150 x 150px 강의 썸네일" />
 			</div>
 		</div>
 	);
 }
 
-export default ContentImageInfo;
+export default InfoImage;

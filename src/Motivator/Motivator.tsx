@@ -4,9 +4,9 @@ import styles from './Motivator.module.sass';
 
 import { SETTINGS } from '../settings';
 
-import ContentBasicInfo from './ContentBasicInfo';
-import ContentImageInfo from './ContentImageInfo';
-import ContentLectureInfo from './ContentLectureInfo';
+import InfoBasic from './InfoBasic';
+import InfoImage from './InfoImage';
+import InfoLecture from './InfoLecture';
 
 import MotivatorItem from '../Common/MotivatorItem';
 
@@ -148,9 +148,9 @@ function Motivator() {
       </div>
 
       <div className={styles.content}>
-        <ContentImageInfo src={motivator.image} onChange={onImageInfoChange} />
-        <ContentBasicInfo data={motivator} onChange={onBasicInfoChange} />
-        <ContentLectureInfo />
+        <InfoImage src={motivator.image} onChange={onImageInfoChange} />
+        <InfoBasic data={motivator} onChange={onBasicInfoChange} />
+        <InfoLecture />
         <div className={styles.saveBox} onClick={()=>onSaveMotivator()}>
           <p>저장하기</p>
         </div>

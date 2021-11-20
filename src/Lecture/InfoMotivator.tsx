@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './ContentMotivatorInfo.module.sass';
+import styles from './InfoMotivator.module.sass';
 
 import MotivatorItem from '../Common/MotivatorItem';
 
-function ContentMotivatorInfo(){
+function InfoMotivator(){
 	return(
 		<div className={styles.root}>
 			<p>강사 정보</p>
@@ -27,4 +27,4 @@ function ContentMotivatorInfo(){
 	);
 }
 
-export default ContentMotivatorInfo;
+export default InfoMotivator;

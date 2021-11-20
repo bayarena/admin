@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './ContentLectureInfo.module.sass';
+import styles from './InfoLecture.module.sass';
 
 import LectureItem from '../Common/LectureItem';
 
-function ContentLectureInfo(){
+function InfoLecture(){
 	return(
 		<div className={styles.root}>
 			<p>연결된 강의</p>
@@ -18,4 +18,4 @@ function ContentLectureInfo(){
 	);
 }
 
-export default ContentLectureInfo;
+export default InfoLecture;

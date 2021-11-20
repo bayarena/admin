@@ -4,9 +4,9 @@ import styles from './Lecture.module.sass';
 
 import { SETTINGS } from '../settings';
 
-import ContentImageInfo from './ContentImageInfo';
-import ContentBasicInfo from './ContentBasicInfo';
-import ContentMotivatorInfo from './ContentMotivatorInfo';
+import InfoImage from './InfoImage';
+import InfoBasic from './InfoBasic';
+import InfoMotivator from './InfoMotivator';
 
 import LectureItem from '../Common/LectureItem';
 
@@ -139,9 +139,9 @@ function Lecture() {
       </div>
 
       <div className={styles.content}>
-        <ContentImageInfo src={lecture.image} onChange={onImageInfoChange}/>
-        <ContentBasicInfo data={lecture} onChange={onBasicInfoChange} />
-        <ContentMotivatorInfo />
+        <InfoImage src={lecture.image} onChange={onImageInfoChange}/>
+        <InfoBasic data={lecture} onChange={onBasicInfoChange} />
+        <InfoMotivator />
         <div className={styles.saveBox} onClick={()=>onSaveLecture()}>
           <p>저장하기</p>
         </div>

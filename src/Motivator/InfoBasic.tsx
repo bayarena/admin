@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import styles from './ContentBasicInfo.module.sass'
+import styles from './InfoBasic.module.sass'
 
 import type { T_motivator } from './Motivator';
 
@@ -21,7 +21,7 @@ function InputBox(props:any){
 	);
 }
 
-function ContentBasicInfo(props:I_basicInfo){
+function InfoBasic(props:I_basicInfo){
 
 	const [motivator, setMotivator] = useState(props.data);
 
@@ -53,4 +53,4 @@ function ContentBasicInfo(props:I_basicInfo){
 	);
 }
 
-export default ContentBasicInfo;
+export default InfoBasic;
