@@ -112,7 +112,7 @@ function Motivator() {
 
       <div className={styles.motivatorList}>
         <div
-          className={styles.motivatorItem + ' ' + styles.new}
+          className={styles.new}
           onClick={()=>setMotivator(emptyData)}>
           추가하기
         </div>

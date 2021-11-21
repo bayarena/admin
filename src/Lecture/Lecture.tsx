@@ -39,7 +39,6 @@ function Lecture() {
           return acc;
         }, []);
 
-        console.log(lectureList);
         setLectureList(lectureList);
       }
     });   
