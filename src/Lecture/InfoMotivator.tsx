@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './InfoMotivator.module.sass';
 
@@ -33,8 +33,23 @@ function InfoMotivator(props:any){
   		});
   	}, [props.data]);
 
-  	const onClickMotivator = (id:number) => {
+  	const onAddMotivator = (id:number) => {
+  		let mots = [...props.data];
+  		const idx = mots.indexOf(id);
+  		if(idx === -1){ // New item
+  			mots.push(id);
+  			mots.sort();
+  			props.onChange(mots);
+  		}
+  	};
 
+  	const onRemoveMotivator = (id:number) => {
+  		let mots = [...props.data];
+  		const idx = mots.indexOf(id);
+  		if(idx > -1){
+  			mots.splice(idx, 1);
+  			props.onChange(mots);
+  		}
   	};
 
 	return(
@@ -43,12 +58,12 @@ function InfoMotivator(props:any){
 			<div className={styles.content}>
 				<div>
 				{motivatorList.map((d:T_motivator, i:number) => {
-			        return <MotivatorItem {...d} key={i} onClick={()=>onClickMotivator(d.id)} />
+			        return <MotivatorItem {...d} key={i} onClick={()=>onAddMotivator(d.id)} />
 			    })}
 				</div>
 				<div>
 				{lectureMotivators.map((d:T_motivator, i:number) => {
-			        return <MotivatorItem {...d} key={i} onClick={()=>onClickMotivator(d.id)} />
+			        return <MotivatorItem {...d} key={i} onClick={()=>onRemoveMotivator(d.id)} />
 			    })}
 				</div>
 			</div>

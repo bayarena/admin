@@ -72,13 +72,22 @@ function Lecture() {
     setLecture(lec);
   };
 
+  const onMotivatorInfoChange = (mots:number[]) => {
+    let lec = {...lecture};
+    lec.motivators = mots;
+    setLecture(lec);
+  }
+
   const onSaveLecture = () => {
 
     let form = new FormData();
     form.append('title', lecture.title);
     form.append('subtitle', lecture.subtitle);
     form.append('date', lecture.date);
-    form.append('motivators', "1");
+
+    lecture.motivators.map((d:number) => {
+      form.append('motivators', d.toString());
+    });
 
     if(lecture.image instanceof File){
       form.append('image', lecture.image);
@@ -132,7 +141,7 @@ function Lecture() {
       <div className={styles.content}>
         <InfoImage src={lecture.image} onChange={onImageInfoChange}/>
         <InfoBasic data={lecture} onChange={onBasicInfoChange} />
-        <InfoMotivator data={lecture.motivators} />
+        <InfoMotivator data={lecture.motivators} onChange={onMotivatorInfoChange} />
         <div className={styles.saveBox} onClick={()=>onSaveLecture()}>
           <p>저장하기</p>
         </div>
