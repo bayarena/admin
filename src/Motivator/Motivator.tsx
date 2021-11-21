@@ -16,7 +16,8 @@ const emptyData:T_motivator = {
   name_eng: "Please enter english name",
   id: 0,
   image: "",
-  image_thumb: ""
+  image_thumb: "",
+  lectures: [],
 };
 
 function Motivator() {
@@ -124,7 +125,7 @@ function Motivator() {
       <div className={styles.content}>
         <InfoImage src={motivator.image} onChange={onImageInfoChange} />
         <InfoBasic data={motivator} onChange={onBasicInfoChange} />
-        <InfoLecture />
+        <InfoLecture data={motivator.lectures} />
         <div className={styles.saveBox} onClick={()=>onSaveMotivator()}>
           <p>저장하기</p>
         </div>
