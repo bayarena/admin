@@ -25,10 +25,22 @@ function LectureItem(props:any){
     return date_split[0] + ' ' + new_time_str;
   };
 
+  const getSubString = () => {
+    let diff = "";
+    switch(props.difficulty){
+      case 0 : diff = "초급"; break;
+      case 1 : diff = "중급"; break;
+      case 2 : diff = "상급"; break;
+      default : diff = "초급"; break;
+    }
+
+    return diff + " | " + props.time +"min | " + props.theme;
+  };
+
   return(
     <div className={styles.lectureItem} onClick={()=>props.onClick ? props.onClick() : ''}>
       <p>{datePrettyString(props.date)}</p>
-      <p className={styles.lectureTitle}>{props.title} <span>{props.subtitle}</span></p>
+      <p className={styles.lectureTitle}>{props.title} <span>{getSubString()}</span></p>
       <div className={styles.lectureThumb}>
         {props.thumbs ? props.thumbs.map((d:string, i:number) => {
           return <img src={d} alt="" key={i} />

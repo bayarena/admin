@@ -1,11 +1,18 @@
 export type T_lecture = {
   id: number,
+
   title: string,
-  subtitle: string,
   date: string,
-  motivators: number[],
-  thumbs: string[],
   image: string | File,
+
+  category: string,
+  description: string,
+  theme: string,
+  time: number,
+  difficulty: number,
+  motivators: number[],
+
+  thumbs: string[],
 };
 
 export type T_motivator = {

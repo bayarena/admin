@@ -12,13 +12,20 @@ import InfoMotivator from './InfoMotivator';
 import LectureItem from '../Common/LectureItem';
 
 const emptyData:T_lecture = {
-  title: "Enter title",
-  subtitle: "Enter sub titme",
   id: 0,
+
+  title: "",
   date: "",
+  image: "",
+
+  category: "",
+  description: "",
+  theme : "",
+  time : 0,
+  difficulty: 0,
+
   motivators: [],
   thumbs: [],
-  image: "",
 };
 
 function Lecture() {
@@ -60,8 +67,10 @@ function Lecture() {
   const onBasicInfoChange = (new_lec:T_lecture) => {
     let lec = {...lecture};
     lec.title = new_lec.title;
-    lec.subtitle = new_lec.subtitle;
     lec.date = new_lec.date;
+    lec.category = new_lec.category;
+    lec.description = new_lec.description;
+    lec.theme = new_lec.theme;
     setLecture(lec);
   };
 
@@ -81,8 +90,10 @@ function Lecture() {
 
     let form = new FormData();
     form.append('title', lecture.title);
-    form.append('subtitle', lecture.subtitle);
     form.append('date', lecture.date);
+    form.append('category', lecture.category);
+    form.append('description', lecture.description);
+    form.append('theme', lecture.theme);
 
     lecture.motivators.map((d:number) => {
       form.append('motivators', d.toString());

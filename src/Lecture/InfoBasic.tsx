@@ -22,14 +22,44 @@ function InputDateTime(props:any){
 }
 
 function InputBox(props:any){
+
+	const onChange = (s:string) => {
+		if(s.length > props.maxlength){
+			props.onChange(props.type, s.substr(0, props.maxlength));
+		}else{
+			props.onChange(props.type, s);
+		}
+	}
+
 	return(
 		<div className={styles.inputBox}>
 			<span>{props.name}</span>
 			<input
 			  type="text"
 			  value={props.value}
-			  onChange={(e)=>props.onChange(props.type, e.target.value)}
+			  onChange={(e)=>onChange(e.target.value)}
+			  placeholder={props.placeholder}
 			/>
+		</div>
+	);
+}
+
+function InputTextBox(props:any){
+	return(
+		<div className={styles.inputTextBox}>
+			<span>{props.name}</span>
+			<textarea
+			  value={props.value}
+			  onChange={(e)=>props.onChange(props.type, e.target.value)}
+			  placeholder={props.placeholder}
+			/>
+		</div>
+	);
+}
+
+function Spacer(){
+	return(
+		<div style={{height: "25px"}}>
 		</div>
 	);
 }
@@ -42,8 +72,10 @@ function InfoBasic(props:I_basicInfo){
 		let new_lecture:T_lecture = {...lecture};
 		switch(type){
 			case "title" : new_lecture.title = value; break;
-			case "subtitle" : new_lecture.subtitle = value; break;
 			case "date" : new_lecture.date = value; break;
+			case "category" : new_lecture.category = value; break;
+			case "description" : new_lecture.description = value; break;
+			case "theme" : new_lecture.theme = value; break;
  		}
 
  		setLecture(new_lecture);
@@ -59,9 +91,40 @@ function InfoBasic(props:I_basicInfo){
 			<p>기본 정보</p>
 			<div className={styles.content}>
 				<div>
-					<InputBox name="Title" type="title" value={lecture.title} onChange={onChange} />
-					<InputBox name="Sub Titme" type="subtitle" value={lecture.subtitle} onChange={onChange} />
-					<InputDateTime name="Date" type="date" value={lecture.date.replace('Z', '')} onChange={onChange} />
+					<InputBox
+					  name="Title"
+					  type="title"
+					  placeholder="20자 내로 적어주세요"
+					  maxlength={20}
+					  value={lecture.title}
+					  onChange={onChange} />
+					<InputDateTime
+					  name="Date"
+					  type="date"
+					  value={lecture.date.replace('Z', '')}
+					  onChange={onChange} />
+					<Spacer />
+					<InputBox
+					  name="Category"
+					  type="category"
+					  placeholder="20자 내로 적어주세요"
+					  maxlength={20}
+					  value={lecture.category}
+					  onChange={onChange} />
+					<InputTextBox
+					  name="Description"
+					  type="description"
+					  placeholder="300자 내로 적어주세요"
+					  maxlength={300}
+					  value={lecture.description}
+					  onChange={onChange} />
+					<InputBox
+					  name="Theme"
+					  type="theme"
+					  placeholder="20자 내로 적어주세요"
+					  maxlength={20}
+					  value={lecture.theme}
+					  onChange={onChange} />
 				</div>
 			</div>
 		</div>
