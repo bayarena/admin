@@ -16,7 +16,7 @@
     flex-grow: 1
     margin-left: 5px
 
-.inputBox
+.inputGroup
   margin-bottom: 5px
   font-size: 13px
 
@@ -24,9 +24,12 @@
     display: inline-block
     width: 20%
     line-height: 25px
+    margin-right: 5px
+
+.inputBox
+  @extend .inputGroup
 
   > input
-    margin-left: 5px
     width: 70%
     background: transparent
     outline-style: none
@@ -39,16 +42,9 @@
 
 
 .inputTextBox
-  margin-bottom: 5px
-  font-size: 13px
-
-  > span
-    display: inline-block
-    width: 20%
-    vertical-align: top
+  @extend .inputGroup
 
   > textarea
-    margin-left: 5px
     width: 70%
     background: transparent
     outline-style: none
@@ -56,3 +52,20 @@
     color: white
     height: 100px
     resize: none
+
+.inputDifficulty
+  @extend .inputGroup
+
+  > div
+    display: inline-flex
+    width: 70%
+    justify-content: space-between
+
+    > button
+      width: 30%
+      font-weight: bold
+      height: 35px
+
+.activeBtn
+  background: #ffeb3b
+    

@@ -57,6 +57,25 @@ function InputTextBox(props:any){
 	);
 }
 
+function Difficulty(props:any){
+	return(
+		<div className={styles.inputDifficulty}>
+			<span>Difficulty</span>
+			<div>
+				<button 
+				  className={props.difficulty === 0 ? styles.activeBtn : ''}
+				  onClick={()=>props.onChange(0)}>초급</button>
+				<button 
+				  className={props.difficulty === 1 ? styles.activeBtn : ''}
+				  onClick={()=>props.onChange(1)}>중급</button>
+				<button 
+				  className={props.difficulty === 2 ? styles.activeBtn : ''}
+				  onClick={()=>props.onChange(2)}>상급</button>
+			</div>
+		</div>
+	);
+}
+
 function Spacer(){
 	return(
 		<div style={{height: "25px"}}>
@@ -82,6 +101,14 @@ function InfoBasic(props:I_basicInfo){
 		props.onChange(new_lecture);
 	};
 
+	const onChangeDiff = (value:number) => {
+		let new_lecture:T_lecture = {...lecture};
+		new_lecture.difficulty = value;
+
+		setLecture(new_lecture);
+		props.onChange(new_lecture);
+	}
+
 	useEffect(()=>{
 		setLecture(props.data);
 	}, [props.data]);
@@ -103,7 +130,9 @@ function InfoBasic(props:I_basicInfo){
 					  type="date"
 					  value={lecture.date.replace('Z', '')}
 					  onChange={onChange} />
+
 					<Spacer />
+
 					<InputBox
 					  name="Category"
 					  type="category"
@@ -125,6 +154,11 @@ function InfoBasic(props:I_basicInfo){
 					  maxlength={20}
 					  value={lecture.theme}
 					  onChange={onChange} />
+
+					<Spacer />
+					<Difficulty
+					  difficulty={lecture.difficulty}
+					  onChange={(d:number)=>onChangeDiff(d)} />
 				</div>
 			</div>
 		</div>

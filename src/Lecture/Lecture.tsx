@@ -71,6 +71,7 @@ function Lecture() {
     lec.category = new_lec.category;
     lec.description = new_lec.description;
     lec.theme = new_lec.theme;
+    lec.difficulty = new_lec.difficulty;
     setLecture(lec);
   };
 
@@ -94,6 +95,7 @@ function Lecture() {
     form.append('category', lecture.category);
     form.append('description', lecture.description);
     form.append('theme', lecture.theme);
+    form.append('difficulty', lecture.difficulty.toString());
 
     lecture.motivators.map((d:number) => {
       form.append('motivators', d.toString());
