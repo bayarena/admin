@@ -69,7 +69,6 @@ function Lecture() {
     let lec = {...lecture};
     lec.title = new_lec.title;
     lec.date = new_lec.date;
-    lec.category = new_lec.category;
     lec.description = new_lec.description;
     lec.theme = new_lec.theme;
     lec.difficulty = new_lec.difficulty;

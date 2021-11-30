@@ -7,12 +7,14 @@ import type { T_category } from '../settings';
 
 import InfoImage from './InfoImage';
 import InfoBasic from './InfoBasic';
+import InfoLecture from './InfoLecture';
 
 const emptyData:T_category = {
   id: 0,
 
   title : "",
   thumb: "",
+  lectures: [],
 };
 
 function Category() {
@@ -127,6 +129,7 @@ function Category() {
       <div className={styles.content}>
         <InfoImage src={category.thumb} onChange={onImageInfoChange} />
         <InfoBasic data={category} onChange={onBasicInfoChange} />
+        <InfoLecture data={category.lectures} />
 
         <div className={styles.saveBox} onClick={()=>onSaveCategory()}>
           <p>저장하기</p>

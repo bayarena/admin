@@ -33,7 +33,7 @@ function InfoCategory(props:any) {
 	return(
 		<div className={styles.root}>
 			<p>카테고리 설정</p>
-			<select value={props.value === undefined ? 0 : props.value} onChange={onChange}>
+			<select value={props.value === null ? 0 : props.value} onChange={onChange}>
 				<option value={0}>미분류</option>
 			{categoryList.map((d:any, i:number) => {
 				return <option key={i} value={d.id}>{d.title}</option>

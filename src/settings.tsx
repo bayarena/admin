@@ -31,6 +31,7 @@ export type T_category = {
 
   title: string,
   thumb: string | File,
+  lectures: T_lecture[],
 }
 
 export const SETTINGS = {

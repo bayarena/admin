@@ -40,7 +40,7 @@ function LectureItem(props:any){
   return(
     <div className={styles.lectureItem} onClick={()=>props.onClick ? props.onClick() : ''}>
       <p>{datePrettyString(props.date)}</p>
-      <p className={styles.lectureTitle}>{props.title} <span>{getSubString()}</span></p>
+      <p className={styles.lectureTitle}>{props.title} <span>{getSubString()}</span><span>{props.tag}</span></p>
       <div className={styles.lectureThumb}>
         {props.thumbs ? props.thumbs.map((d:string, i:number) => {
           return <img src={d} alt="" key={i} />
