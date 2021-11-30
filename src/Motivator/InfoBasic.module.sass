@@ -16,7 +16,8 @@
     flex-grow: 1
     margin-left: 5px
 
-.inputBox
+
+.inputGroup
   margin-bottom: 5px
   font-size: 13px
 
@@ -24,12 +25,27 @@
     display: inline-block
     width: 20%
     line-height: 25px
+    margin-right: 5px
+
+.inputBox
+  @extend .inputGroup
 
   > input
-    margin-left: 5px
     width: 70%
     background: transparent
     outline-style: none
     border: 1px solid #999
     color: white
     height: 25px
+
+.inputTextBox
+  @extend .inputGroup
+
+  > textarea
+    width: 70%
+    background: transparent
+    outline-style: none
+    border: 1px solid #999
+    color: white
+    height: 100px
+    resize: none

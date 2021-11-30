@@ -8,14 +8,38 @@ interface I_basicInfo{
 	onChange: (v:T_motivator)=>void,
 }
 
+
 function InputBox(props:any){
+
+	const onChange = (s:string) => {
+		if(s.length > props.maxlength){
+			props.onChange(props.type, s.substr(0, props.maxlength));
+		}else{
+			props.onChange(props.type, s);
+		}
+	}
+
 	return(
 		<div className={styles.inputBox}>
 			<span>{props.name}</span>
 			<input
 			  type="text"
 			  value={props.value}
+			  onChange={(e)=>onChange(e.target.value)}
+			  placeholder={props.placeholder}
+			/>
+		</div>
+	);
+}
+
+function InputTextBox(props:any){
+	return(
+		<div className={styles.inputTextBox}>
+			<span>{props.name}</span>
+			<textarea
+			  value={props.value}
 			  onChange={(e)=>props.onChange(props.type, e.target.value)}
+			  placeholder={props.placeholder}
 			/>
 		</div>
 	);
@@ -30,6 +54,7 @@ function InfoBasic(props:I_basicInfo){
 		switch(type){
 			case "name_kor" : new_motivator.name_kor = value; break;
 			case "name_eng" : new_motivator.name_eng = value; break;
+			case "description" : new_motivator.description = value; break;
  		}
 
  		setMotivator(new_motivator);
@@ -45,8 +70,27 @@ function InfoBasic(props:I_basicInfo){
 			<p>기본 정보</p>
 			<div className={styles.content}>
 				<div>
-					<InputBox name="이름 (한글)" type="name_kor" value={motivator.name_kor} onChange={onChange} />
-					<InputBox name="이름 (영문)" type="name_eng" value={motivator.name_eng} onChange={onChange} />
+					<InputBox 
+					  name="이름 (한글)"
+					  type="name_kor"
+					  placeholder="30자 내로 적어주세요"
+					  maxlength={30}
+					  value={motivator.name_kor}
+					  onChange={onChange} />
+					<InputBox 
+					  name="이름 (영문)"
+					  type="name_eng"
+					  placeholder="30자 내로 적어주세요"
+					  maxlength={30}
+					  value={motivator.name_eng}
+					  onChange={onChange} />
+					<InputTextBox
+					  name="클래스설명"
+					  type="description"
+					  placeholder="300자 내로 적어주세요"
+					  maxlength={300}
+					  value={motivator.description}
+					  onChange={onChange}/>
 				</div>
 			</div>
 		</div>

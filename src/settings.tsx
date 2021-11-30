@@ -18,6 +18,7 @@ export type T_lecture = {
 export type T_motivator = {
   name_kor: string,
   name_eng: string,
+  description: string,
   id: number,
   image: string | File,
   image_thumb: string,

@@ -12,8 +12,9 @@ import InfoLecture from './InfoLecture';
 import MotivatorItem from '../Common/MotivatorItem';
 
 const emptyData:T_motivator = {
-  name_kor: "한글 이름 입력",
-  name_eng: "Please enter english name",
+  name_kor: "",
+  name_eng: "",
+  description: "",
   id: 0,
   image: "",
   image_thumb: "",
@@ -55,6 +56,7 @@ function Motivator() {
     let mot = {...motivator};
     mot.name_kor = new_mot.name_kor;
     mot.name_eng = new_mot.name_eng;
+    mot.description = new_mot.description;
     setMotivator(mot);
   };
 
@@ -68,6 +70,7 @@ function Motivator() {
     let form = new FormData();
     form.append('name_eng', motivator.name_eng);
     form.append('name_kor', motivator.name_kor);
+    form.append('description', motivator.description);
 
     if(motivator.image instanceof File){
       form.append('image', motivator.image);
