@@ -57,10 +57,29 @@ function InputTextBox(props:any){
 	);
 }
 
+function InputTime(props:any){
+
+	const onClick = () => {
+		let text = prompt("소요시간 (5분 단위로 입력)", props.time);
+		if(text === null) return;
+		let time:number = parseInt(text);
+		if(isNaN(time)) return;
+
+		time = Math.floor(time / 5) * 5;
+		props.onChange(time);
+	}
+	return(
+		<div className={styles.inputTime}>
+			<span>소요시간</span>
+			<div onClick={onClick}>{props.time} 분</div>
+		</div>
+	);
+}
+
 function Difficulty(props:any){
 	return(
 		<div className={styles.inputDifficulty}>
-			<span>Difficulty</span>
+			<span>난이도</span>
 			<div>
 				<button 
 				  className={props.difficulty === 0 ? styles.activeBtn : ''}
@@ -109,6 +128,14 @@ function InfoBasic(props:I_basicInfo){
 		props.onChange(new_lecture);
 	}
 
+	const onChangeTime = (time:number) => {
+		let new_lecture:T_lecture = {...lecture};
+		new_lecture.time = time;
+
+		setLecture(new_lecture);
+		props.onChange(new_lecture);
+	}
+
 	useEffect(()=>{
 		setLecture(props.data);
 	}, [props.data]);
@@ -119,36 +146,40 @@ function InfoBasic(props:I_basicInfo){
 			<div className={styles.content}>
 				<div>
 					<InputBox
-					  name="Title"
+					  name="클래스명"
 					  type="title"
 					  placeholder="20자 내로 적어주세요"
 					  maxlength={20}
 					  value={lecture.title}
 					  onChange={onChange} />
 					<InputDateTime
-					  name="Date"
+					  name="날짜"
 					  type="date"
 					  value={lecture.date.replace('Z', '')}
 					  onChange={onChange} />
+					<InputTime 
+					  time={lecture.time}
+					  onChange={onChangeTime}
+					/>
 
 					<Spacer />
 
 					<InputBox
-					  name="Category"
+					  name="운동카테고리"
 					  type="category"
 					  placeholder="20자 내로 적어주세요"
 					  maxlength={20}
 					  value={lecture.category}
 					  onChange={onChange} />
 					<InputTextBox
-					  name="Description"
+					  name="클래스설명"
 					  type="description"
 					  placeholder="300자 내로 적어주세요"
 					  maxlength={300}
 					  value={lecture.description}
 					  onChange={onChange} />
 					<InputBox
-					  name="Theme"
+					  name="테마"
 					  type="theme"
 					  placeholder="20자 내로 적어주세요"
 					  maxlength={20}

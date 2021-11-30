@@ -72,6 +72,7 @@ function Lecture() {
     lec.description = new_lec.description;
     lec.theme = new_lec.theme;
     lec.difficulty = new_lec.difficulty;
+    lec.time = new_lec.time;
     setLecture(lec);
   };
 
@@ -96,6 +97,7 @@ function Lecture() {
     form.append('description', lecture.description);
     form.append('theme', lecture.theme);
     form.append('difficulty', lecture.difficulty.toString());
+    form.append('time', lecture.time.toString());
 
     lecture.motivators.map((d:number) => {
       form.append('motivators', d.toString());
