@@ -5,7 +5,7 @@ export type T_lecture = {
   date: string,
   image: string | File,
 
-  category: string,
+  category: number | undefined,
   description: string,
   theme: string,
   time: number,

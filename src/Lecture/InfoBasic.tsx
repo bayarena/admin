@@ -111,7 +111,6 @@ function InfoBasic(props:I_basicInfo){
 		switch(type){
 			case "title" : new_lecture.title = value; break;
 			case "date" : new_lecture.date = value; break;
-			case "category" : new_lecture.category = value; break;
 			case "description" : new_lecture.description = value; break;
 			case "theme" : new_lecture.theme = value; break;
  		}
@@ -164,13 +163,6 @@ function InfoBasic(props:I_basicInfo){
 
 					<Spacer />
 
-					<InputBox
-					  name="운동카테고리"
-					  type="category"
-					  placeholder="20자 내로 적어주세요"
-					  maxlength={20}
-					  value={lecture.category}
-					  onChange={onChange} />
 					<InputTextBox
 					  name="클래스설명"
 					  type="description"

@@ -8,6 +8,7 @@ import type { T_lecture } from '../settings';
 import InfoImage from './InfoImage';
 import InfoBasic from './InfoBasic';
 import InfoMotivator from './InfoMotivator';
+import InfoCategory from './InfoCategory';
 
 import LectureItem from '../Common/LectureItem';
 
@@ -18,7 +19,7 @@ const emptyData:T_lecture = {
   date: "",
   image: "",
 
-  category: "",
+  category: 0,
   description: "",
   theme : "",
   time : 0,
@@ -88,12 +89,28 @@ function Lecture() {
     setLecture(lec);
   }
 
+  const onCategoryChange = (cat:number) => {
+    let lec = {...lecture};
+    lec.category = cat;
+    setLecture(lec);
+  };
+
   const onSaveLecture = () => {
 
     let form = new FormData();
     form.append('title', lecture.title);
     form.append('date', lecture.date);
-    form.append('category', lecture.category);
+
+    if(lecture.category === undefined){
+      form.append('category', "");
+    }else{
+      if(lecture.category == 0){
+        form.append('category', "");
+      }else{
+        form.append('category', lecture.category.toString());
+      }
+    }
+
     form.append('description', lecture.description);
     form.append('theme', lecture.theme);
     form.append('difficulty', lecture.difficulty.toString());
@@ -155,6 +172,7 @@ function Lecture() {
       <div className={styles.content}>
         <InfoImage src={lecture.image} onChange={onImageInfoChange}/>
         <InfoBasic data={lecture} onChange={onBasicInfoChange} />
+        <InfoCategory value={lecture.category} onChange={onCategoryChange} />
         <InfoMotivator data={lecture.motivators} onChange={onMotivatorInfoChange} />
         <div className={styles.saveBox} onClick={()=>onSaveLecture()}>
           <p>저장하기</p>
@@ -168,4 +186,3 @@ function Lecture() {
 }
 
 export default Lecture;
-export type { T_lecture };
