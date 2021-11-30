@@ -16,14 +16,22 @@ export type T_lecture = {
 };
 
 export type T_motivator = {
+  id: number,
+  
   name_kor: string,
   name_eng: string,
   description: string,
-  id: number,
   image: string | File,
   image_thumb: string,
   lectures: T_lecture[],
 };
+
+export type T_category = {
+  id: number,
+
+  title: string,
+  thumb: string | File,
+}
 
 export const SETTINGS = {
 	REST_URL: "http://52.79.124.70:7231",

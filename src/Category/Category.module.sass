@@ -1,0 +1,45 @@
+@import "../Common/Common.sass"
+
+.root
+  display: flex
+  height: 100%
+
+.categoryList
+  width: 350px
+  margin-right: 10px
+  height: 100%
+  overflow-y: scroll
+
+  &::-webkit-scrollbar
+    display: none
+
+.listItem
+  @extend .baseContentBox
+  text-align: center
+  font-weight: bold
+  line-height: 50px
+  cursor: pointer
+
+.content
+  width: 100%
+  overflow-y: scroll
+
+  &::-webkit-scrollbar
+    display: none
+
+.saveBox
+  @extend .baseContentBox
+  width: 70%
+  display: inline-block
+  cursor: pointer
+  text-align: center
+  background: #434570
+
+.deleteBox
+  @extend .baseContentBox
+  width: 20%
+  display: inline-block
+  float: right
+  cursor: pointer
+  text-align: center
+  background: #f44336

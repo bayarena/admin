@@ -1,0 +1,41 @@
+@import "../Common/Common.sass"
+
+.root
+  @extend .baseContentBox
+
+  padding: 10px
+
+  > p
+    margin: 0 0 5px 0
+    font-weight: bold
+
+.content
+  display: flex
+  justify-content: center
+  align-items: center
+
+.imageSelector
+  background: rgb(25, 25, 25)
+  border: 2px dashed white
+  border-radius: 5px
+  display: flex
+  justify-content: center
+  align-items: center
+  flex-direction: column
+  cursor: pointer
+  margin: 0 10px
+
+  &:hover
+    background: rgb(35, 35, 36)
+
+  > p
+    color: white
+    font-size: 12px
+    margin: 15px
+
+.ImageSelector
+  @extend .imageSelector
+
+  > img
+    width: 520px
+    margin : 30px
