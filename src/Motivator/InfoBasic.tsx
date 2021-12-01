@@ -85,7 +85,7 @@ function InfoBasic(props:I_basicInfo){
 					  value={motivator.name_eng}
 					  onChange={onChange} />
 					<InputTextBox
-					  name="클래스설명"
+					  name="강사 설명"
 					  type="description"
 					  placeholder="300자 내로 적어주세요"
 					  maxlength={300}
