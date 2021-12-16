@@ -100,7 +100,7 @@ function Lecture() {
     form.append('title', lecture.title);
     form.append('date', lecture.date);
 
-    if(lecture.category === undefined){
+    if(lecture.category === undefined || lecture.category === null){
       form.append('category', "");
     }else{
       if(lecture.category == 0){
