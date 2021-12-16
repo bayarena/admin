@@ -20,6 +20,7 @@ export type T_motivator = {
   
   name_kor: string,
   name_eng: string,
+  expertise: string,
   description: string,
   image: string | File,
   image_thumb: string,

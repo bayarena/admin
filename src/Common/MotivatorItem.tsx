@@ -10,7 +10,6 @@ function MotivatorItem(props:any){
       </div>
       <div>
         <p>{props.name_kor} <span>{props.name_eng}</span></p>
-        <p>informations...</p>
       </div>
     </div>
   );

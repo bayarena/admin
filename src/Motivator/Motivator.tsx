@@ -15,6 +15,7 @@ const emptyData:T_motivator = {
   name_kor: "",
   name_eng: "",
   description: "",
+  expertise: "",
   id: 0,
   image: "",
   image_thumb: "",
@@ -57,6 +58,7 @@ function Motivator() {
     mot.name_kor = new_mot.name_kor;
     mot.name_eng = new_mot.name_eng;
     mot.description = new_mot.description;
+    mot.expertise = new_mot.expertise;
     setMotivator(mot);
   };
 
@@ -71,6 +73,7 @@ function Motivator() {
     form.append('name_eng', motivator.name_eng);
     form.append('name_kor', motivator.name_kor);
     form.append('description', motivator.description);
+    form.append('expertise', motivator.expertise);
 
     if(motivator.image instanceof File){
       form.append('image', motivator.image);

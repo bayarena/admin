@@ -55,6 +55,7 @@ function InfoBasic(props:I_basicInfo){
 			case "name_kor" : new_motivator.name_kor = value; break;
 			case "name_eng" : new_motivator.name_eng = value; break;
 			case "description" : new_motivator.description = value; break;
+			case "expertise" : new_motivator.expertise = value; break;
  		}
 
  		setMotivator(new_motivator);
@@ -91,6 +92,13 @@ function InfoBasic(props:I_basicInfo){
 					  maxlength={300}
 					  value={motivator.description}
 					  onChange={onChange}/>
+					<InputBox 
+					  name="전문성"
+					  type="expertise"
+					  placeholder="30자 내로 적어주세요"
+					  maxlength={30}
+					  value={motivator.expertise}
+					  onChange={onChange} />
 				</div>
 			</div>
 		</div>
