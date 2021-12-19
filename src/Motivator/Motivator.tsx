@@ -107,12 +107,15 @@ function Motivator() {
   };
 
   const onDeleteMotivator = () => {
-    if(window.confirm("정말로 삭제하시겠습니까?")){
+    let text = prompt("삭제하려면 강사의 이름을 정확하게 입력해주세요");
+    if(text === motivator.name_kor){
       axios.delete(SETTINGS.REST_URL + "/motivators/" + motivator.id + "/")
         .then((res) => {
           setMotivator(emptyData);
           refreshData();
-        });
+      });
+    }else{
+      alert("잘못된 입력");
     }
   };
 

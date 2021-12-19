@@ -99,12 +99,15 @@ function Category() {
   };
 
   const onDeleteCategory = () => {
-    if(window.confirm("정말로 삭제하시겠습니까?")){
+    let text = prompt("삭제하려면 카테고리의 이름을 정확하게 입력해주세요");
+    if(text === category.title){
       axios.delete(SETTINGS.REST_URL + "/category/" + category.id + "/")
         .then((res) => {
           setCategory(emptyData);
           refreshData();
-        });
+      });
+    }else{
+      alert("잘못된 입력");
     }
   };
 
