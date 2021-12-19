@@ -126,7 +126,6 @@ function Motivator() {
       motList.splice(belowItem, 1, motivatorList[dragItem]);
     }
 
-    console.log(motList);
     setMotivatorList(motList);
     setDragItem(-2);
     setBelowItem(-2);
@@ -148,7 +147,7 @@ function Motivator() {
           className={styles.new}>
           저장하기
         </div>
-        {belowItem === -1 && dragItem !== 0 ? <div className={styles.emptyItem}></div> : ''}
+        {belowItem === -1 && dragItem > 0 ? <div className={styles.emptyItem}></div> : ''}
 
         {motivatorList.map((d:T_motivator, i:number) => {
           return(

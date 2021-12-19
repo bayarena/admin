@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SyntheticEvent  } from 'react';
 import styles from './Category.module.sass';
 import axios from 'axios';
 
@@ -21,6 +21,9 @@ function Category() {
 
   const [categoryList, setCategoryList] = useState([]);
   const [category, setCategory] = useState(emptyData);
+
+  const [dragItem, setDragItem] = useState(-2);
+  const [belowItem, setBelowItem] = useState(-2);
 
   const refreshData = () => {
    axios.get(SETTINGS.REST_URL + '/category/')
@@ -105,23 +108,54 @@ function Category() {
     }
   };
 
+  const onItemDragEnd = (i:number) => {
+    let catList = [...categoryList];
+    if(belowItem === -1){
+      catList.splice(dragItem, 1);
+      catList.splice(0, 0, categoryList[dragItem]);
+    }else if(belowItem !== dragItem && belowItem !== -2){
+      catList.splice(dragItem, 1, categoryList[belowItem]);
+      catList.splice(belowItem, 1, categoryList[dragItem]);
+    }
+
+    setCategoryList(catList);
+    setDragItem(-2);
+    setBelowItem(-2);
+  }
+
   return (
     <div className={styles.root}>
 
       <div className={styles.categoryList}>
         <div
-          className={styles.listItem}
+          className={styles.new}
           onClick={()=>setCategory(emptyData)}>
           추가하기
         </div>
+        <div
+          draggable
+          onDragEnter={(e:SyntheticEvent) => setBelowItem(-1)}
+          onClick={(e:any)=>alert("기능 구현중")}
+          className={styles.new}>
+          저장하기
+        </div>
+        {belowItem === -1 && dragItem > 0 ? <div className={styles.emptyItem}></div> : ''}
+
         {categoryList.map((d:T_category,i:number) => {
           return (
-            <div
-              key={i}
-              className={styles.listItem}
-              onClick={()=>onClickCategory(d.id)}>
-              {d.title}
-            </div>
+            <React.Fragment>
+              <div
+                key={i}
+                className={styles.listItem}
+                draggable
+                onDragStart={(e:SyntheticEvent) => setDragItem(i)}
+                onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
+                onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
+                onClick={()=>onClickCategory(d.id)}>
+                {d.title}
+              </div>
+              {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}
+            </React.Fragment>
           );
         })}
       </div>
