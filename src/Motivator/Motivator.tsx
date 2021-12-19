@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import axios from 'axios';
 import styles from './Motivator.module.sass';
 
@@ -26,6 +26,9 @@ function Motivator() {
 
   const [motivatorList, setMotivatorList] = useState([]);
   const [motivator, setMotivator] = useState(emptyData);
+  
+  const [dragItem, setDragItem] = useState(-2);
+  const [belowItem, setBelowItem] = useState(-2);
 
   const refreshData = () => {
 
@@ -113,6 +116,22 @@ function Motivator() {
     }
   };
 
+  const onItemDragEnd = (i:number) => {
+    let motList = [...motivatorList];
+    if(belowItem === -1){
+      motList.splice(dragItem, 1);
+      motList.splice(0, 0, motivatorList[dragItem]);
+    }else if(belowItem !== dragItem && belowItem !== -2){
+      motList.splice(dragItem, 1, motivatorList[belowItem]);
+      motList.splice(belowItem, 1, motivatorList[dragItem]);
+    }
+
+    console.log(motList);
+    setMotivatorList(motList);
+    setDragItem(-2);
+    setBelowItem(-2);
+  }
+
   return (
     <div className={styles.root}>
 
@@ -122,10 +141,30 @@ function Motivator() {
           onClick={()=>setMotivator(emptyData)}>
           추가하기
         </div>
+        <div
+          draggable
+          onDragEnter={(e:SyntheticEvent) => setBelowItem(-1)}
+          onClick={(e:any)=>alert("기능 구현중")}
+          className={styles.new}>
+          저장하기
+        </div>
+        {belowItem === -1 && dragItem !== 0 ? <div className={styles.emptyItem}></div> : ''}
 
         {motivatorList.map((d:T_motivator, i:number) => {
-          return <MotivatorItem {...d} key={i} onClick={()=>onClickMotivator(d.id)} />
+          return(
+          <React.Fragment>
+            <MotivatorItem
+              {...d}
+              key={i}
+              onDragStart={(e:SyntheticEvent) => setDragItem(i)}
+              onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
+              onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
+              onClick={()=>onClickMotivator(d.id)} />
+              {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}
+          </React.Fragment>
+          )
         })}
+
       </div>
 
       <div className={styles.content}>
