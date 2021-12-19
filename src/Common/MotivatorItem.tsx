@@ -29,7 +29,11 @@ function MotivatorItem(props:any){
       </div>
       <div>
         <p>{props.name_kor} <span>{props.name_eng}</span></p>
+        <p>{props.expertise}</p>
       </div>
+      {props.onDelete ? <div onClick={()=>props.onDelete()}>
+        삭제
+      </div> : ''}
     </div>
   );
 }

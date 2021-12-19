@@ -106,10 +106,10 @@ function Motivator() {
     }
   };
 
-  const onDeleteMotivator = () => {
+  const onDeleteMotivator = (mot:T_motivator) => {
     let text = prompt("삭제하려면 강사의 이름을 정확하게 입력해주세요");
-    if(text === motivator.name_kor){
-      axios.delete(SETTINGS.REST_URL + "/motivators/" + motivator.id + "/")
+    if(text === mot.name_kor){
+      axios.delete(SETTINGS.REST_URL + "/motivators/" + mot.id + "/")
         .then((res) => {
           setMotivator(emptyData);
           refreshData();
@@ -166,6 +166,7 @@ function Motivator() {
               onDragStart={(e:SyntheticEvent) => setDragItem(i)}
               onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
               onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
+              onDelete={()=>onDeleteMotivator(d)}
               onClick={()=>onClickMotivator(d.id)} />
               {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}
           </React.Fragment>
@@ -181,7 +182,7 @@ function Motivator() {
         <div className={styles.saveBox} onClick={()=>onSaveMotivator()}>
           <p>저장하기</p>
         </div>
-        <div className={styles.deleteBox} onClick={()=>onDeleteMotivator()}>
+        <div className={styles.deleteBox} onClick={()=>onDeleteMotivator(motivator)}>
           <p>삭제하기</p>
         </div>
       </div>
