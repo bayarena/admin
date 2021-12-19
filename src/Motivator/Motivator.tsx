@@ -122,8 +122,13 @@ function Motivator() {
       motList.splice(dragItem, 1);
       motList.splice(0, 0, motivatorList[dragItem]);
     }else if(belowItem !== dragItem && belowItem !== -2){
-      motList.splice(dragItem, 1, motivatorList[belowItem]);
-      motList.splice(belowItem, 1, motivatorList[dragItem]);
+      if(belowItem < dragItem){
+        motList.splice(dragItem, 1);
+        motList.splice(belowItem + 1, 0, motivatorList[dragItem]);
+      }else{
+        motList.splice(belowItem + 1, 0, motivatorList[dragItem]);
+        motList.splice(dragItem, 1);
+      }
     }
 
     setMotivatorList(motList);

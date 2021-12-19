@@ -114,8 +114,13 @@ function Category() {
       catList.splice(dragItem, 1);
       catList.splice(0, 0, categoryList[dragItem]);
     }else if(belowItem !== dragItem && belowItem !== -2){
-      catList.splice(dragItem, 1, categoryList[belowItem]);
-      catList.splice(belowItem, 1, categoryList[dragItem]);
+      if(belowItem < dragItem){
+        catList.splice(dragItem, 1);
+        catList.splice(belowItem + 1, 0, categoryList[dragItem]);
+      }else{
+        catList.splice(belowItem + 1, 0, categoryList[dragItem]);
+        catList.splice(dragItem, 1);
+      }
     }
 
     setCategoryList(catList);
