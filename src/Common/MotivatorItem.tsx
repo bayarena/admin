@@ -1,7 +1,9 @@
-import React, { SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent } from 'react';
 import styles from './MotivatorItem.module.sass';
 
 function MotivatorItem(props:any){
+
+  const [hover, setHover] = useState(false);
 
   const onDragStart = (e:SyntheticEvent) => {
     if(props.onDragStart) props.onDragStart(e);
@@ -21,6 +23,8 @@ function MotivatorItem(props:any){
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       onDragEnter={onDragEnter}
+      onMouseOver={(e:any) => setHover(true)}
+      onMouseLeave={(e:any) => setHover(false)}
       className={styles.motivatorItem}
       onClick={()=>props.onClick ? props.onClick() : ''}>
       <div style={{
@@ -31,7 +35,7 @@ function MotivatorItem(props:any){
         <p>{props.name_kor} <span>{props.name_eng}</span></p>
         <p>{props.expertise}</p>
       </div>
-      {props.onDelete ? <div onClick={()=>props.onDelete()}>
+      {props.onDelete && hover ? <div onClick={()=>props.onDelete()}>
         삭제
       </div> : ''}
     </div>
