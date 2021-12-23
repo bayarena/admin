@@ -11,8 +11,8 @@ function MotivatorList(props:any){
 
   const [motivatorList, setMotivatorList] = useState([]);
 
-  const [dragItem, setDragItem] = useState(-2);
-  const [belowItem, setBelowItem] = useState(-2);
+  const [dragItem, setDragItem] = useState(-1);
+  const [belowItem, setBelowItem] = useState(-1);
 
   const refreshData = () => {
     axios.get(SETTINGS.REST_URL + '/motivators/?meta')
@@ -33,22 +33,17 @@ function MotivatorList(props:any){
 
   const onItemDragEnd = (i:number) => {
     let motList = [...motivatorList];
-    if(belowItem === -1){
-      motList.splice(dragItem, 1);
-      motList.splice(0, 0, motivatorList[dragItem]);
-    }else if(belowItem !== dragItem && belowItem !== -2){
-      if(belowItem < dragItem){
-        motList.splice(dragItem, 1);
-        motList.splice(belowItem + 1, 0, motivatorList[dragItem]);
-      }else{
-        motList.splice(belowItem + 1, 0, motivatorList[dragItem]);
-        motList.splice(dragItem, 1);
-      }
-    }
+    
+    motList[dragItem] = motivatorList[belowItem];
+    motList[belowItem] = motivatorList[dragItem];
+
+    let temp = motList[dragItem]['priority'];
+    motList[dragItem]['priority'] = motList[belowItem]['priority'];
+    motList[belowItem]['priority'] = temp;
 
     setMotivatorList(motList);
-    setDragItem(-2);
-    setBelowItem(-2);
+    setDragItem(-1);
+    setBelowItem(-1);
   }
 
   return(
@@ -59,26 +54,22 @@ function MotivatorList(props:any){
           추가하기
         </div>
         <div
-          draggable
-          onDragEnter={(e:SyntheticEvent) => setBelowItem(-1)}
           onClick={(e:any)=>alert("기능 구현중")}
           className={styles.new}>
           저장하기
         </div>
-        {belowItem === -1 && dragItem > 0 ? <div className={styles.emptyItem}></div> : ''}
-
         {motivatorList.map((d:T_motivator, i:number) => {
           return(
           <React.Fragment key={i}>
             <MotivatorItem
               {...d}
               key={i}
+              highlight={i===belowItem}
               onDragStart={(e:SyntheticEvent) => setDragItem(i)}
               onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
               onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
               onDelete={()=>props.deleteMotivatorID(d.id, d.name_kor)}
               onClick={()=>props.setMotivatorID(d.id)} />
-              {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}
           </React.Fragment>
           )
         })}

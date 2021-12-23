@@ -25,7 +25,7 @@ function MotivatorItem(props:any){
       onDragEnter={onDragEnter}
       onMouseOver={(e:any) => setHover(true)}
       onMouseLeave={(e:any) => setHover(false)}
-      className={styles.motivatorItem}
+      className={styles.motivatorItem + ' ' + (props.highlight ? styles.highlight : '')}
       onClick={()=>props.onClick ? props.onClick() : ''}>
       <div style={{
         background: "url(" + props.image_thumb + ")"
