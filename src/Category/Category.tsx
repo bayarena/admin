@@ -17,31 +17,107 @@ const emptyData:T_category = {
   lectures: [],
 };
 
-function Category() {
+function CategoryList(props:any){
 
   const [categoryList, setCategoryList] = useState([]);
-  const [category, setCategory] = useState(emptyData);
 
   const [dragItem, setDragItem] = useState(-2);
   const [belowItem, setBelowItem] = useState(-2);
 
   const refreshData = () => {
-   axios.get(SETTINGS.REST_URL + '/category/')
+   axios.get(SETTINGS.REST_URL + '/category/?meta')
     .then((res) => {
       if(res.status === 200){
-        let categoryList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
-          acc.push(curr);
-          return acc;
-        }, []);
-
-        setCategoryList(categoryList);
+        setCategoryList(res.data.results);
       }
     });   
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     refreshData();
-  }, []);
+  },[]);
+
+  useEffect(() => {
+    refreshData();
+  },[props.toggle]);
+
+  const onItemDragEnd = (i:number) => {
+    let catList = [...categoryList];
+    if(belowItem === -1){
+      catList.splice(dragItem, 1);
+      catList.splice(0, 0, categoryList[dragItem]);
+    }else if(belowItem !== dragItem && belowItem !== -2){
+      if(belowItem < dragItem){
+        catList.splice(dragItem, 1);
+        catList.splice(belowItem + 1, 0, categoryList[dragItem]);
+      }else{
+        catList.splice(belowItem + 1, 0, categoryList[dragItem]);
+        catList.splice(dragItem, 1);
+      }
+    }
+
+    setCategoryList(catList);
+    setDragItem(-2);
+    setBelowItem(-2);
+  }
+
+  return(
+    <div className={styles.categoryList}>
+      <div
+        className={styles.new}
+        //onClick={()=>setCategory(emptyData)}
+        onClick={()=>props.setCategoryID(-1)}>
+        추가하기
+      </div>
+      <div
+        draggable
+        onDragEnter={(e:SyntheticEvent) => setBelowItem(-1)}
+        onClick={(e:any)=>alert("기능 구현중")}
+        className={styles.new}>
+        저장하기
+      </div>
+      {belowItem === -1 && dragItem > 0 ? <div className={styles.emptyItem}></div> : ''}
+
+      {categoryList.map((d:T_category,i:number) => {
+        return (
+          <React.Fragment key={i}>
+            <div
+              key={i}
+              className={styles.listItem}
+              draggable
+              onDragStart={(e:SyntheticEvent) => setDragItem(i)}
+              onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
+              onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
+              onClick={()=>props.setCategoryID(d.id)} >
+              {d.title}
+            </div>
+            {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
+
+function Category() {
+
+  const [category, setCategory] = useState(emptyData);
+  const [toggleList, setToggleList] = useState(true);
+
+  const refreshData = (id:number) => {
+    if(id === -1){
+      setCategory(emptyData);
+      return;
+    }
+
+    axios.get(SETTINGS.REST_URL + '/category/' + id)
+      .then((res) => {
+        if(res.status === 200){
+          setCategory(res.data);
+        }
+    });   
+
+  };
 
   const onClickCategory = (n:number) => {
     axios.get(SETTINGS.REST_URL + '/category/' + n)
@@ -84,7 +160,7 @@ function Category() {
             onClickCategory(res.data.id);
           }
 
-          refreshData();
+          setToggleList(!toggleList);
       });
 
     }else{ // Modify exist instance
@@ -92,7 +168,7 @@ function Category() {
       axios.put(SETTINGS.REST_URL + "/category/" + category.id + "/", form)
       .then((res) => {
         if(res.status === 200) alert("저장 성공");
-        refreshData();
+        setToggleList(!toggleList);
       });
 
     }
@@ -104,69 +180,19 @@ function Category() {
       axios.delete(SETTINGS.REST_URL + "/category/" + category.id + "/")
         .then((res) => {
           setCategory(emptyData);
-          refreshData();
+          setToggleList(!toggleList);
       });
     }else{
       alert("잘못된 입력");
     }
   };
 
-  const onItemDragEnd = (i:number) => {
-    let catList = [...categoryList];
-    if(belowItem === -1){
-      catList.splice(dragItem, 1);
-      catList.splice(0, 0, categoryList[dragItem]);
-    }else if(belowItem !== dragItem && belowItem !== -2){
-      if(belowItem < dragItem){
-        catList.splice(dragItem, 1);
-        catList.splice(belowItem + 1, 0, categoryList[dragItem]);
-      }else{
-        catList.splice(belowItem + 1, 0, categoryList[dragItem]);
-        catList.splice(dragItem, 1);
-      }
-    }
-
-    setCategoryList(catList);
-    setDragItem(-2);
-    setBelowItem(-2);
-  }
-
   return (
     <div className={styles.root}>
 
-      <div className={styles.categoryList}>
-        <div
-          className={styles.new}
-          onClick={()=>setCategory(emptyData)}>
-          추가하기
-        </div>
-        <div
-          draggable
-          onDragEnter={(e:SyntheticEvent) => setBelowItem(-1)}
-          onClick={(e:any)=>alert("기능 구현중")}
-          className={styles.new}>
-          저장하기
-        </div>
-        {belowItem === -1 && dragItem > 0 ? <div className={styles.emptyItem}></div> : ''}
-
-        {categoryList.map((d:T_category,i:number) => {
-          return (
-            <React.Fragment key={i}>
-              <div
-                key={i}
-                className={styles.listItem}
-                draggable
-                onDragStart={(e:SyntheticEvent) => setDragItem(i)}
-                onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
-                onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
-                onClick={()=>onClickCategory(d.id)}>
-                {d.title}
-              </div>
-              {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}
-            </React.Fragment>
-          );
-        })}
-      </div>
+      <CategoryList
+        setCategoryID={refreshData}
+        toggle={toggleList} />
 
       <div className={styles.content}>
         <InfoImage src={category.thumb} onChange={onImageInfoChange} />

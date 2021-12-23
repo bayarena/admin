@@ -190,7 +190,8 @@ function Motivator() {
 
       <MotivatorList
         setMotivatorID={refreshData}
-        deleteMotivatorID={onDeleteMotivator} />
+        deleteMotivatorID={onDeleteMotivator}
+        toggle={toggleList} />
 
       <div className={styles.content}>
         <InfoImage src={motivator.image} onChange={onImageInfoChange} />
