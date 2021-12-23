@@ -10,6 +10,7 @@ import MotivatorItem from '../Common/MotivatorItem';
 function MotivatorList(props:any){
 
   const [motivatorList, setMotivatorList] = useState([]);
+  const [changeList, setChangeList] = useState<any[]>([]);
 
   const [dragItem, setDragItem] = useState(-1);
   const [belowItem, setBelowItem] = useState(-1);
@@ -41,9 +42,31 @@ function MotivatorList(props:any){
     motList[dragItem]['priority'] = motList[belowItem]['priority'];
     motList[belowItem]['priority'] = temp;
 
+    let chList = [...changeList].reduce((acc, curr) => {
+      if(curr.id !== motList[dragItem]['id'] &&
+         curr.id !== motList[belowItem]['id']){
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+
+    chList.push({'id' : motList[dragItem]['id'], 'priority' : motList[dragItem]['priority']});
+    chList.push({'id' : motList[belowItem]['id'], 'priority' : motList[belowItem]['priority']});
+
+    setChangeList(chList);
     setMotivatorList(motList);
     setDragItem(-1);
     setBelowItem(-1);
+  }
+
+  const saveList = () => {
+    setMotivatorList([]);
+    changeList.forEach(elem => {
+      axios.put(SETTINGS.REST_URL + '/motivators/' + elem.id + '/',{
+        'priority' : elem.priority
+      });
+    });
+    setTimeout(()=>refreshData(), 500);
   }
 
   return(
@@ -54,7 +77,7 @@ function MotivatorList(props:any){
           추가하기
         </div>
         <div
-          onClick={(e:any)=>alert("기능 구현중")}
+          onClick={(e:any)=>saveList()}
           className={styles.new}>
           저장하기
         </div>
