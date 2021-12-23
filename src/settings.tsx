@@ -1,18 +1,23 @@
+export type T_meta_motivator = {
+  id: number,
+  name_kor: string,
+  image_thumb: string,
+};
+
 export type T_lecture = {
   id: number,
 
-  title: string,
+  meta_motivator: T_meta_motivator[],
+  tag: string,
+  title: string
   date: string,
   image: string | File,
-
-  category: number | undefined,
   description: string,
   theme: string,
   time: number,
   difficulty: number,
+  category: number | undefined,
   motivators: number[],
-
-  thumbs: string[],
 };
 
 export type T_motivator = {

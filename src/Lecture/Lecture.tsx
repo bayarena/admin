@@ -22,11 +22,12 @@ const emptyData:T_lecture = {
   category: 0,
   description: "",
   theme : "",
+  tag: "",
   time : 0,
   difficulty: 0,
 
   motivators: [],
-  thumbs: [],
+  meta_motivator: [],
 };
 
 function Lecture() {
@@ -38,16 +39,7 @@ function Lecture() {
    axios.get(SETTINGS.REST_URL + '/lectures/')
     .then((res) => {
       if(res.status === 200){
-        let lectureList = res.data.results.reduce((acc:any, curr:any, idx:number)=>{
-          let lec:T_lecture = curr;
-          lec.thumbs = lec.thumbs.map((d:string) => {
-            return SETTINGS.REST_URL + d;
-          });
-          acc.push(lec);
-          return acc;
-        }, []);
-
-        setLectureList(lectureList);
+        setLectureList(res.data.results);
       }
     });   
   };
@@ -103,7 +95,7 @@ function Lecture() {
     if(lecture.category === undefined || lecture.category === null){
       form.append('category', "");
     }else{
-      if(lecture.category == 0){
+      if(lecture.category === 0){
         form.append('category', "");
       }else{
         form.append('category', lecture.category.toString());

@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './LectureItem.module.sass'
 
+import type { T_meta_motivator } from '../settings';
+
 function LectureItem(props:any){
 
   const datePrettyString = (date:string) => {
@@ -42,8 +44,8 @@ function LectureItem(props:any){
       <p>{datePrettyString(props.date)}</p>
       <p className={styles.lectureTitle}>{props.title} <span>{getSubString()}</span><span>{props.tag}</span></p>
       <div className={styles.lectureThumb}>
-        {props.thumbs ? props.thumbs.map((d:string, i:number) => {
-          return <img src={d} alt="" key={i} />
+        {props.meta_motivator ? props.meta_motivator.map((d:T_meta_motivator, i:number) => {
+          return <img src={d.image_thumb} alt="" key={i} />
         }) : ''}
       </div>
     </div>    

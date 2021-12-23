@@ -70,7 +70,6 @@ function MotivatorList(props:any){
       <div className={styles.motivatorList}>
         <div
           className={styles.new}
-          //onClick={()=>setMotivator(emptyData)}
           onClick={()=>props.setMotivatorID(-1)}>
           추가하기
         </div>
@@ -85,15 +84,13 @@ function MotivatorList(props:any){
 
         {motivatorList.map((d:T_motivator, i:number) => {
           return(
-          <React.Fragment>
+          <React.Fragment key={i}>
             <MotivatorItem
               {...d}
               key={i}
               onDragStart={(e:SyntheticEvent) => setDragItem(i)}
               onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
               onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
-              //onDelete={()=>onDeleteMotivator(d)}
-              //onClick={()=>onClickMotivator(d.id)}
               onDelete={()=>props.deleteMotivatorID(d.id, d.name_kor)}
               onClick={()=>props.setMotivatorID(d.id)} />
               {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}

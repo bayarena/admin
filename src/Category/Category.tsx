@@ -151,7 +151,7 @@ function Category() {
 
         {categoryList.map((d:T_category,i:number) => {
           return (
-            <React.Fragment>
+            <React.Fragment key={i}>
               <div
                 key={i}
                 className={styles.listItem}
