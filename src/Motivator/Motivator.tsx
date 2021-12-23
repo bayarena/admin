@@ -22,38 +22,107 @@ const emptyData:T_motivator = {
   lectures: [],
 };
 
-function Motivator() {
+function MotivatorList(props:any){
 
   const [motivatorList, setMotivatorList] = useState([]);
-  const [motivator, setMotivator] = useState(emptyData);
-  
+
   const [dragItem, setDragItem] = useState(-2);
   const [belowItem, setBelowItem] = useState(-2);
 
   const refreshData = () => {
-
-    axios.get(SETTINGS.REST_URL + '/motivators/')
+    axios.get(SETTINGS.REST_URL + '/motivators/?meta')
     .then((res) => {
       if(res.status === 200){
         setMotivatorList(res.data.results);
       }
     }); 
- 
   };
 
   useEffect(() => {
-
     refreshData();
-
   },[]);
 
-  const onClickMotivator = (n:number) => {
-    axios.get(SETTINGS.REST_URL + '/motivators/' + n)
+  useEffect(() => {
+    refreshData();
+  },[props.toggle]);
+
+  const onItemDragEnd = (i:number) => {
+    let motList = [...motivatorList];
+    if(belowItem === -1){
+      motList.splice(dragItem, 1);
+      motList.splice(0, 0, motivatorList[dragItem]);
+    }else if(belowItem !== dragItem && belowItem !== -2){
+      if(belowItem < dragItem){
+        motList.splice(dragItem, 1);
+        motList.splice(belowItem + 1, 0, motivatorList[dragItem]);
+      }else{
+        motList.splice(belowItem + 1, 0, motivatorList[dragItem]);
+        motList.splice(dragItem, 1);
+      }
+    }
+
+    setMotivatorList(motList);
+    setDragItem(-2);
+    setBelowItem(-2);
+  }
+
+  return(
+      <div className={styles.motivatorList}>
+        <div
+          className={styles.new}
+          //onClick={()=>setMotivator(emptyData)}
+          onClick={()=>props.setMotivatorID(-1)}>
+          추가하기
+        </div>
+        <div
+          draggable
+          onDragEnter={(e:SyntheticEvent) => setBelowItem(-1)}
+          onClick={(e:any)=>alert("기능 구현중")}
+          className={styles.new}>
+          저장하기
+        </div>
+        {belowItem === -1 && dragItem > 0 ? <div className={styles.emptyItem}></div> : ''}
+
+        {motivatorList.map((d:T_motivator, i:number) => {
+          return(
+          <React.Fragment>
+            <MotivatorItem
+              {...d}
+              key={i}
+              onDragStart={(e:SyntheticEvent) => setDragItem(i)}
+              onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
+              onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
+              //onDelete={()=>onDeleteMotivator(d)}
+              //onClick={()=>onClickMotivator(d.id)}
+              onDelete={()=>props.deleteMotivatorID(d.id, d.name_kor)}
+              onClick={()=>props.setMotivatorID(d.id)} />
+              {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}
+          </React.Fragment>
+          )
+        })}
+
+      </div>
+  );
+}
+
+function Motivator() {
+
+  const [motivator, setMotivator] = useState(emptyData);
+  const [toggleList, setToggleList] = useState(true);
+
+  const refreshData = (id:number) => {
+    if(id === -1){
+      setMotivator(emptyData);
+      return;
+    }
+
+    axios.get(SETTINGS.REST_URL + '/motivators/' + id)
       .then((res) => {
         if(res.status === 200){
           setMotivator(res.data);
         }
-      });
+    });   
+
   };
 
   const onBasicInfoChange = (new_mot:T_motivator) => {
@@ -89,10 +158,10 @@ function Motivator() {
           console.log(res);
           if(res.status === 201){
             alert("저장 성공");
-            onClickMotivator(res.data.id);
+            refreshData(res.data.id);
           }
 
-          refreshData();
+          setToggleList(!toggleList);
       });
 
     }else{ // Modify exist instance
@@ -100,80 +169,31 @@ function Motivator() {
       axios.put(SETTINGS.REST_URL + "/motivators/" + motivator.id + "/", form)
       .then((res) => {
         if(res.status === 200) alert("저장 성공");
-        refreshData();
+        setToggleList(!toggleList);
       });
 
     }
   };
 
-  const onDeleteMotivator = (mot:T_motivator) => {
+  const onDeleteMotivator = (id:number, name:string) => {
     let text = prompt("삭제하려면 강사의 이름을 정확하게 입력해주세요");
-    if(text === mot.name_kor){
-      axios.delete(SETTINGS.REST_URL + "/motivators/" + mot.id + "/")
+    if(text === name){
+      axios.delete(SETTINGS.REST_URL + "/motivators/" + id + "/")
         .then((res) => {
           setMotivator(emptyData);
-          refreshData();
+          setToggleList(!toggleList);
       });
     }else{
       alert("잘못된 입력");
     }
   };
 
-  const onItemDragEnd = (i:number) => {
-    let motList = [...motivatorList];
-    if(belowItem === -1){
-      motList.splice(dragItem, 1);
-      motList.splice(0, 0, motivatorList[dragItem]);
-    }else if(belowItem !== dragItem && belowItem !== -2){
-      if(belowItem < dragItem){
-        motList.splice(dragItem, 1);
-        motList.splice(belowItem + 1, 0, motivatorList[dragItem]);
-      }else{
-        motList.splice(belowItem + 1, 0, motivatorList[dragItem]);
-        motList.splice(dragItem, 1);
-      }
-    }
-
-    setMotivatorList(motList);
-    setDragItem(-2);
-    setBelowItem(-2);
-  }
-
   return (
     <div className={styles.root}>
 
-      <div className={styles.motivatorList}>
-        <div
-          className={styles.new}
-          onClick={()=>setMotivator(emptyData)}>
-          추가하기
-        </div>
-        <div
-          draggable
-          onDragEnter={(e:SyntheticEvent) => setBelowItem(-1)}
-          onClick={(e:any)=>alert("기능 구현중")}
-          className={styles.new}>
-          저장하기
-        </div>
-        {belowItem === -1 && dragItem > 0 ? <div className={styles.emptyItem}></div> : ''}
-
-        {motivatorList.map((d:T_motivator, i:number) => {
-          return(
-          <React.Fragment>
-            <MotivatorItem
-              {...d}
-              key={i}
-              onDragStart={(e:SyntheticEvent) => setDragItem(i)}
-              onDragEnd={(e:SyntheticEvent) => onItemDragEnd(i)}
-              onDragEnter={(e:SyntheticEvent) => setBelowItem(i)}
-              onDelete={()=>onDeleteMotivator(d)}
-              onClick={()=>onClickMotivator(d.id)} />
-              {dragItem >= 0 && i === belowItem && i !== dragItem && belowItem !== dragItem - 1 ? <div className={styles.emptyItem}></div> : ''}
-          </React.Fragment>
-          )
-        })}
-
-      </div>
+      <MotivatorList
+        setMotivatorID={refreshData}
+        deleteMotivatorID={onDeleteMotivator} />
 
       <div className={styles.content}>
         <InfoImage src={motivator.image} onChange={onImageInfoChange} />
@@ -182,7 +202,7 @@ function Motivator() {
         <div className={styles.saveBox} onClick={()=>onSaveMotivator()}>
           <p>저장하기</p>
         </div>
-        <div className={styles.deleteBox} onClick={()=>onDeleteMotivator(motivator)}>
+        <div className={styles.deleteBox} onClick={()=>onDeleteMotivator(motivator.id, motivator.name_kor)}>
           <p>삭제하기</p>
         </div>
       </div>

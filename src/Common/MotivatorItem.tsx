@@ -32,7 +32,7 @@ function MotivatorItem(props:any){
       }}>
       </div>
       <div>
-        <p>{props.name_kor} <span>{props.name_eng}</span></p>
+        <p>{props.name_kor}</p>
         <p>{props.expertise}</p>
       </div>
       {props.onDelete && hover ? <div onClick={()=>props.onDelete()}>

@@ -13,7 +13,7 @@ function InfoMotivator(props:any){
   	const [lectureMotivators, setLectureMotivators] = useState([]);
 
   	useEffect(() => {
-    	axios.get(SETTINGS.REST_URL + '/motivators/')
+    	axios.get(SETTINGS.REST_URL + '/motivators/?meta')
 	    .then((res) => {
 	      if(res.status === 200){
 	        setMotivatorList(res.data.results);
@@ -23,7 +23,7 @@ function InfoMotivator(props:any){
 
   	useEffect(() => {
   		const mots = props.data.map(async (d:number) => {
-  			const res = await axios.get(SETTINGS.REST_URL + '/motivators/' + d + '/');
+  			const res = await axios.get(SETTINGS.REST_URL + '/motivators/' + d + '/?meta');
   			if(res.status === 200) return res.data;
   			else return null;
   		});
