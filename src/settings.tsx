@@ -12,6 +12,7 @@ export type T_lecture = {
   title: string
   date: string,
   image: string | File,
+  main_image: string | File,
   description: string,
   theme: string,
   time: number,

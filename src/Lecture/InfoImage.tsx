@@ -48,7 +48,7 @@ function ImageSelector(props:any){
   );
 }
 
-function InfoImage(props:I_ImageInfo){
+export function InfoImage(props:I_ImageInfo){
 	return(
 		<div className={styles.root}>
 			<p>강의 이미지</p>
@@ -62,4 +62,16 @@ function InfoImage(props:I_ImageInfo){
 	);
 }
 
-export default InfoImage;
+export function InfoMainImage(props:I_ImageInfo){
+	return(
+		<div className={styles.root}>
+			<p>메인 이미지</p>
+			<div className={styles.content}>
+	          <ImageSelector
+	            onChange={props.onChange}
+	            src={props.src}
+	            alt="스테이징 된 강의의 이미지 (크기 제한 없음)" />
+			</div>
+		</div>
+	);
+}

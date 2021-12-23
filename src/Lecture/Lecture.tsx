@@ -5,7 +5,7 @@ import styles from './Lecture.module.sass';
 import { SETTINGS } from '../settings';
 import type { T_lecture } from '../settings';
 
-import InfoImage from './InfoImage';
+import { InfoImage, InfoMainImage } from './InfoImage';
 import InfoBasic from './InfoBasic';
 import InfoMotivator from './InfoMotivator';
 import InfoCategory from './InfoCategory';
@@ -18,6 +18,7 @@ const emptyData:T_lecture = {
   title: "",
   date: "",
   image: "",
+  main_image: "",
 
   category: 0,
   description: "",
@@ -76,6 +77,12 @@ function Lecture() {
     setLecture(lec);
   };
 
+  const onMainImageInfoChange = (file:File) => {
+    let lec = {...lecture};
+    lec.main_image = file;
+    setLecture(lec);
+  };
+
   const onMotivatorInfoChange = (mots:number[]) => {
     let lec = {...lecture};
     lec.motivators = mots;
@@ -116,6 +123,10 @@ function Lecture() {
 
     if(lecture.image instanceof File){
       form.append('image', lecture.image);
+    }
+
+    if(lecture.main_image instanceof File){
+      form.append('main_image', lecture.main_image);
     }
 
     if(lecture.id === 0){ // Create new instance
@@ -168,6 +179,7 @@ function Lecture() {
         <InfoBasic data={lecture} onChange={onBasicInfoChange} />
         <InfoCategory value={lecture.category} onChange={onCategoryChange} />
         <InfoMotivator data={lecture.motivators} onChange={onMotivatorInfoChange} />
+        <InfoMainImage src={lecture.main_image} onChange={onMainImageInfoChange}/>
         <div className={styles.saveBox} onClick={()=>onSaveLecture()}>
           <p>저장하기</p>
         </div>
