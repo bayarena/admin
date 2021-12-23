@@ -76,6 +76,24 @@ function InputTime(props:any){
 	);
 }
 
+function InputStag(props:any){
+
+	const onClick = () => {
+		let text = prompt("스테이징 레벨 입력 (메인화면 스와이프에 뜨는 순서, 0보다 작으면 표시되지 않음)", props.staging);
+		if(text === null) return;
+		let level:number = parseInt(text);
+		if(isNaN(level)) return;
+
+		props.onChange(level);
+	}
+	return(
+		<div className={styles.inputTime}>
+			<span>스테이징</span>
+			<div onClick={onClick}>{props.staging}</div>
+		</div>
+	);
+}
+
 function Difficulty(props:any){
 	return(
 		<div className={styles.inputDifficulty}>
@@ -125,7 +143,7 @@ function InfoBasic(props:I_basicInfo){
 
 		setLecture(new_lecture);
 		props.onChange(new_lecture);
-	}
+	};
 
 	const onChangeTime = (time:number) => {
 		let new_lecture:T_lecture = {...lecture};
@@ -133,7 +151,15 @@ function InfoBasic(props:I_basicInfo){
 
 		setLecture(new_lecture);
 		props.onChange(new_lecture);
-	}
+	};
+
+	const onChangeStaging = (level:number) => {
+		let new_lecture:T_lecture = {...lecture};
+		new_lecture.staging = level;
+
+		setLecture(new_lecture);
+		props.onChange(new_lecture);
+	};
 
 	useEffect(()=>{
 		setLecture(props.data);
@@ -159,6 +185,10 @@ function InfoBasic(props:I_basicInfo){
 					<InputTime 
 					  time={lecture.time}
 					  onChange={onChangeTime}
+					/>
+					<InputStag
+					  staging={lecture.staging}
+					  onChange={onChangeStaging}
 					/>
 
 					<Spacer />

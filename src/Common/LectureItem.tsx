@@ -40,8 +40,11 @@ function LectureItem(props:any){
   };
 
   return(
-    <div className={styles.lectureItem} onClick={()=>props.onClick ? props.onClick() : ''}>
+    <div
+      className={styles.lectureItem + ' ' + (props.staging > 0 ? styles.highlight : '')}
+      onClick={()=>props.onClick ? props.onClick() : ''}>
       <p>{datePrettyString(props.date)}</p>
+      {props.staging > 0 ? <span className={styles.yellowBall}>{props.staging}</span> : ''}
       <p className={styles.lectureTitle}>{props.title} <span>{getSubString()}</span><span>{props.tag}</span></p>
       <div className={styles.lectureThumb}>
         {props.meta_motivator ? props.meta_motivator.map((d:T_meta_motivator, i:number) => {

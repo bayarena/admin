@@ -16,6 +16,7 @@ export type T_lecture = {
   theme: string,
   time: number,
   difficulty: number,
+  staging: number,
   category: number | undefined,
   motivators: number[],
 };

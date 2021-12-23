@@ -25,6 +25,7 @@ const emptyData:T_lecture = {
   tag: "",
   time : 0,
   difficulty: 0,
+  staging: -1,
 
   motivators: [],
   meta_motivator: [],
@@ -65,6 +66,7 @@ function Lecture() {
     lec.theme = new_lec.theme;
     lec.difficulty = new_lec.difficulty;
     lec.time = new_lec.time;
+    lec.staging = new_lec.staging;
     setLecture(lec);
   };
 
@@ -106,6 +108,7 @@ function Lecture() {
     form.append('theme', lecture.theme);
     form.append('difficulty', lecture.difficulty.toString());
     form.append('time', lecture.time.toString());
+    form.append('staging', lecture.staging.toString());
 
     lecture.motivators.map((d:number) => {
       form.append('motivators', d.toString());
