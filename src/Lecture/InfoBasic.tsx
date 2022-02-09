@@ -113,6 +113,15 @@ function Difficulty(props:any){
 	);
 }
 
+function Ticket(props:any){
+	return(
+		<div className={styles.inputBox}>
+			<span>UUID</span>
+			<input type="text" value={props.ticket} disabled />
+		</div>
+	)
+}
+
 function Spacer(){
 	return(
 		<div style={{height: "25px"}}>
@@ -212,6 +221,7 @@ function InfoBasic(props:I_basicInfo){
 					<Difficulty
 					  difficulty={lecture.difficulty}
 					  onChange={(d:number)=>onChangeDiff(d)} />
+					<Ticket ticket={lecture.ticket} />
 				</div>
 			</div>
 		</div>

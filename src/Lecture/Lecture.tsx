@@ -15,6 +15,7 @@ import LectureItem from '../Common/LectureItem';
 const emptyData:T_lecture = {
   id: 0,
 
+  ticket: "",
   title: "",
   date: "",
   image: "",

@@ -7,6 +7,7 @@ export type T_meta_motivator = {
 export type T_lecture = {
   id: number,
 
+  ticket: string,
   meta_motivator: T_meta_motivator[],
   tag: string,
   title: string
